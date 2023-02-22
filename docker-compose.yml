@@ -1,0 +1,16 @@
+version: '3.4'
+
+services:
+  distributedcache.api:
+    image: ${DOCKER_REGISTRY-}distributedcacheapi
+    build:
+      context: .
+      dockerfile: DistributedCache.Api/Dockerfile
+    depends_on:
+      - distributedcache.redis
+  distributedcache.redis:
+    image: redis:latest
+    volumes:
+    - ./.containers/redis:/data
+    ports:
+    - 6379:6379
